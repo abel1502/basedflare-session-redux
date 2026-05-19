@@ -66,34 +66,34 @@ class BasedSession(requests.Session):
         solution = self.solvers[algorithm](
             *challenge["ch"].split("#")[0:2], *map(int, params.split("#"))
         )
+
         self.__post_challenge(domain, f"{challenge['ch']}#{solution}")
 
     def __get_challenge(self, domain: str) -> typing.Optional[typing.Dict[str, typing.Any]]:
-        res = self.get(
+        with self.get(
             f"https://{domain}/.basedflare/bot-check",
             headers={"Accept": "application/json"},
-        )
-        if res.status_code == requests.codes.not_found:
-            return None
-        if res.status_code != requests.codes.forbidden:
-            raise ChallengeRequestError(
-                f"Unexpected status code {res.status_code} when fetching the challenge"
-            )
+        ) as res:
+            if res.status_code != requests.codes.forbidden:
+                return None
 
-        return res.json()
+            try:
+                return res.json()
+            except requests.exceptions.JSONDecodeError:
+                return None
 
     def __post_challenge(self, domain: str, pow_response: str):
-        res = self.post(
+        with self.post(
             f"https://{domain}/.basedflare/bot-check",
             data={"pow_response": pow_response},
             headers={"Content-Type": "application/x-www-form-urlencoded"},
-        )
-        if res.status_code != requests.codes.found:
-            raise ChallengeRequestError(
-                f"Unexpected status code {res.status_code} when posting the challenge solution"
-            )
-        if "_basedflare_pow" not in res.headers.get("Set-Cookie", ""):
-            raise ChallengeRequestError(
-                "The server did not send the bypass cookie after solving the challenge"
-            )
+        ) as res:
+            if res.status_code != requests.codes.found:
+                raise ChallengeRequestError(
+                    f"Unexpected status code {res.status_code} when posting the challenge solution"
+                )
+            if "_basedflare_pow" not in res.headers.get("Set-Cookie", ""):
+                raise ChallengeRequestError(
+                    "The server did not send the bypass cookie after solving the challenge"
+                )
 
