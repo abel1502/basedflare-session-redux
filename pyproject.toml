@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "basedflare-session-niquests"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
     "niquests>=2.32.0",
     "argon2-cffi>=23.1.0",
