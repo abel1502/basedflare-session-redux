@@ -24,19 +24,25 @@ class BasedSession(requests.Session):
 
     @functools.wraps(requests.Session.request)
     def request(self, method: str, url: str, *args, **kwargs) -> requests.Response:
-        domain = urlparse(url).netloc
+        parsed_url = urlparse(url)
+        domain = parsed_url.netloc
+        path = parsed_url.path
+        
         # Solve the challenge if the session does not have the necessary cookie
         if not self.cookies.get(
             "_basedflare_pow", domain=f".{domain}"
-        ) and not url.endswith(".basedflare/bot-check"):
+        ) and path != "/.basedflare/bot-check":
             self.__solve_challenge(domain)
 
         res = super().request(method, url, *args, **kwargs)
 
         # Fallback to solving the challenge if the response is a redirect, e.g. the cookie is invalid
-        if ".basedflare/bot-check?/" in res.url:
-            self.__solve_challenge(domain)
-            res = super().request(method, url, *args, **kwargs)
+        if res.url and res.url != url:
+            parsed_res_url = urlparse(res.url)
+            
+            if parsed_res_url.path == "/.basedflare/bot-check" and parsed_res_url.query.startswith("/"):
+                self.__solve_challenge(domain)
+                res = super().request(method, url, *args, **kwargs)
 
         return res
 
