@@ -16,7 +16,8 @@ authors = [
 ]
 description = "Provides a niquests-flavored session to solve BasedFlare challenges automatically. It also includes utility functions to solve the challenges manually."
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
 keywords = ["basedflare", "session", "niquests"]
 classifiers = [
     "Development Status :: 3 - Alpha",
