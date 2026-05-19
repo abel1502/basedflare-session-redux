@@ -12,13 +12,13 @@ class BasedSession(niquests.Session):
     """A session that can solve BasedFlare challenges automatically."""
     
     __eager: bool
-    solvers: typing.Dict[str, typing.Callable[[str, str, int, int, int], int]]
+    __solvers: typing.Dict[str, typing.Callable[[str, str, int, int, int], int]]
 
     @functools.wraps(niquests.Session.__init__)
     def __init__(self, *args, eager: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
         self.__eager = eager
-        self.solvers = {
+        self.__solvers = {
             "argon2": solve_argon2,
             # sha256 does not require the same parameters as argon2 (time_cost, memory_cost)
             # but BasedFlare sends them anyway, so we have to wrap it to keep the same parser
@@ -61,10 +61,10 @@ class BasedSession(niquests.Session):
             raise NotImplementedError("CAPTCHA challenges are not supported")
 
         algorithm, params = challenge["pow"].split("#", 1)
-        if algorithm not in self.solvers:
+        if algorithm not in self.__solvers:
             raise NotImplementedError(f"{algorithm} is not a supported algorithm")
 
-        solution = self.solvers[algorithm](
+        solution = self.__solvers[algorithm](
             *challenge["ch"].split("#")[0:2], *map(int, params.split("#"))
         )
         self.__post_challenge(domain, f"{challenge['ch']}#{solution}")
