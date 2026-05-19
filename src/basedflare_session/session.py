@@ -37,7 +37,7 @@ class BasedSession(niquests.Session):
         # Fallback to solving the challenge if the response is a redirect, e.g. the cookie is invalid
         if ".basedflare/bot-check?/" in res.url:
             self.__solve_challenge(domain)
-            res = super().request(method, url, **kwargs)
+            res = super().request(method, url, *args, **kwargs)
 
         return res
 
