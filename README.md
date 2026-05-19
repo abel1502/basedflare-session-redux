@@ -1,8 +1,8 @@
 # basedflare-session-niquests
 
-[![PyPI version](https://img.shields.io/pypi/v/basedflare-session-niquests.svg)](https://pypi.org/project/basedflare-session-niquests/)
-[![Python versions](https://img.shields.io/pypi/pyversions/basedflare-session-niquests.svg)](https://pypi.org/project/basedflare-session-niquests/)
-[![License](https://img.shields.io/pypi/l/basedflare-session-niquests.svg)](LICENSE)
+[![PyPI version](https://img.shields.io/pypi/v/basedflare-session-niquests)](https://pypi.org/project/basedflare-session-niquests/)
+[![Python versions](https://img.shields.io/pypi/pyversions/basedflare-session-niquests)](https://pypi.org/project/basedflare-session-niquests/)
+[![License](https://img.shields.io/pypi/l/basedflare-session-niquests)](LICENSE)
 
 A package that extends [Python's niquests session](https://niquests.readthedocs.io/en/latest/api.html#request-sessions) to solve some [BasedFlare](https://basedflare.com/) Proof of Work (PoW) challenges automatically.
 It also includes utility functions to solve the challenges manually.
