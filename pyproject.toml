@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "basedflare-session-niquests"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
     "niquests>=2.32.0",
     "argon2-cffi>=23.1.0",
@@ -16,7 +16,7 @@ authors = [
 ]
 description = "Provides a niquests-flavored session to solve BasedFlare challenges automatically. It also includes utility functions to solve the challenges manually."
 readme = "README.md"
-license = "GPL-3.0-or-later"
+license = "AGPL-3.0"
 license-files = ["LICENSE"]
 keywords = ["basedflare", "session", "niquests"]
 classifiers = [
