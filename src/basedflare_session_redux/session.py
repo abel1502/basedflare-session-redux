@@ -3,18 +3,20 @@ import typing
 import functools
 from urllib.parse import urlparse
 
-import niquests
+import anyquests as requests
+if typing.TYPE_CHECKING:
+    import requests
 from .utils import solve_argon2, solve_sha256
 from .exceptions import ChallengeRequestError
 
 
-class BasedSession(niquests.Session):
+class BasedSession(requests.Session):
     """A session that can solve BasedFlare challenges automatically."""
     
     __eager: bool
     __solvers: typing.Dict[str, typing.Callable[[str, str, int, int, int], int]]
 
-    @functools.wraps(niquests.Session.__init__)
+    @functools.wraps(requests.Session.__init__)
     def __init__(self, *args, eager: bool = False, **kwargs):
         super().__init__(*args, **kwargs)
         self.__eager = eager
@@ -27,8 +29,8 @@ class BasedSession(niquests.Session):
             ),
         }
 
-    @functools.wraps(niquests.Session.request)
-    def request(self, method: str, url: str, *args, **kwargs) -> niquests.Response:
+    @functools.wraps(requests.Session.request)
+    def request(self, method: str, url: str, *args, **kwargs) -> requests.Response:
         parsed_url = urlparse(url)
         domain = parsed_url.netloc
         path = parsed_url.path
@@ -75,12 +77,12 @@ class BasedSession(niquests.Session):
             f"https://{domain}/.basedflare/bot-check",
             headers={"Accept": "application/json"},
         ) as res:
-            if res.status_code != niquests.codes.forbidden:
+            if res.status_code != requests.codes.forbidden:
                 return None
 
             try:
                 return res.json()
-            except niquests.exceptions.JSONDecodeError:
+            except requests.exceptions.JSONDecodeError:
                 return None
 
     def __post_challenge(self, domain: str, pow_response: str):
@@ -89,7 +91,7 @@ class BasedSession(niquests.Session):
             data={"pow_response": pow_response},
             headers={"Content-Type": "application/x-www-form-urlencoded"},
         ) as res:
-            if res.status_code != niquests.codes.found:
+            if res.status_code != requests.codes.found:
                 raise ChallengeRequestError(
                     f"Unexpected status code {res.status_code} when posting the challenge solution"
                 )

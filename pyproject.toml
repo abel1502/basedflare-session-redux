@@ -3,29 +3,30 @@ requires = ["uv_build>=0.11.15,<0.12"]
 build-backend = "uv_build"
 
 [project]
-name = "basedflare-session-niquests"
-version = "0.2.1"
+name = "basedflare-session-redux"
+version = "0.3.0"
 dependencies = [
-    "niquests>=2.32.0",
+    "anyquests",
     "argon2-cffi>=23.1.0",
+    "requests>=2.32.4",  # Fallback in case neither requests nor niquests is installed
 ]
 requires-python = ">=3.8"
 authors = [
     { name = "loynet", email = "loynet@protonmail.com" },
     { name = "abel1502" },
 ]
-description = "Provides a niquests-flavored session to solve BasedFlare challenges automatically. It also includes utility functions to solve the challenges manually."
+description = "Provides a requests- or niquests-flavored session to solve BasedFlare challenges automatically. Also includes utility functions to solve the challenges manually."
 readme = "README.md"
 license = "AGPL-3.0-or-later"
 license-files = ["LICENSE"]
-keywords = ["basedflare", "session", "niquests"]
+keywords = ["basedflare", "session", "requests", "niquests"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
     "Intended Audience :: Developers",
 ]
 
 [project.urls]
-Homepage = "https://github.com/abel1502/basedflare-session-niquests"
-Issues = "https://github.com/abel1502/basedflare-session-niquests/issues"
-Repository = "https://github.com/abel1502/basedflare-session-niquests.git"
+Homepage = "https://github.com/abel1502/basedflare-session-redux"
+Issues = "https://github.com/abel1502/basedflare-session-redux/issues"
+Repository = "https://github.com/abel1502/basedflare-session-redux.git"

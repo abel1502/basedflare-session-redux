@@ -1,17 +1,17 @@
-# basedflare-session-niquests
+# basedflare-session-redux
 
-[![PyPI version](https://img.shields.io/pypi/v/basedflare-session-niquests)](https://pypi.org/project/basedflare-session-niquests/)
-[![Python versions](https://img.shields.io/pypi/pyversions/basedflare-session-niquests)](https://pypi.org/project/basedflare-session-niquests/)
-[![License](https://img.shields.io/pypi/l/basedflare-session-niquests)](LICENSE)
+[![PyPI version](https://img.shields.io/pypi/v/basedflare-session-redux)](https://pypi.org/project/basedflare-session-redux/)
+[![Python versions](https://img.shields.io/pypi/pyversions/basedflare-session-redux)](https://pypi.org/project/basedflare-session-redux/)
+[![License](https://img.shields.io/pypi/l/basedflare-session-redux)](LICENSE)
 
-A package that extends [Python's niquests session](https://niquests.readthedocs.io/en/latest/api.html#request-sessions) to solve some [BasedFlare](https://basedflare.com/) Proof of Work (PoW) challenges automatically.
+A package that extends Python's [niquests](https://niquests.readthedocs.io/en/latest/api.html#request-sessions) or [requests](https://requests.readthedocs.io/en/latest/api.html#request-sessions) session to solve some [BasedFlare](https://basedflare.com/) Proof of Work (PoW) challenges automatically.
 It also includes utility functions to solve the challenges manually.
 
 Please note that **this package is a work in progress** and may not function in all cases.
 Currently, it supports the `argon2` and `sha256` PoW challenges.
 Any other challenge, such as a CAPTCHA, will raise an exception.
 
-_Fork notice:_ This is a port of [basedflare-session](https://github.com/loynet/basedflare-session/) to [niquests](https://github.com/jawah/niquests). Big thanks to @loynet and @jawah for their work! I intend to maintain this fork up to date with the original package, as well as introduce improvements where applicable.
+_Fork notice:_ This is a port of [basedflare-session](https://github.com/loynet/basedflare-session/) to support both[niquests](https://github.com/jawah/niquests) and [requests](https://github.com/psf/requests). It uses my [anyquests](https://github.com/abel1502/anyquests) package for that. It also introduces some improvements, such as correctly handling sites that do not use BasedFlare. Big thanks to @loynet and @jawah for their work! I intend to maintain this fork up to date with the original package, as well as introduce further improvements where applicable.
 
 ## Usage
 
@@ -19,7 +19,7 @@ Suppose `example.com` is a website that requires you to solve a challenge before
 example of how to use the package:
 
 ```python
-from basedflare_session_niquests import BasedSession
+from basedflare_session_redux import BasedSession
 
 # Create a new session
 session = BasedSession()
