@@ -13,6 +13,8 @@ Any other challenge, such as a CAPTCHA, will raise an exception.
 
 _Fork notice:_ This is a port of [basedflare-session](https://github.com/loynet/basedflare-session/) to support both[niquests](https://github.com/jawah/niquests) and [requests](https://github.com/psf/requests). It uses my [anyquests](https://github.com/abel1502/anyquests) package for that. It also introduces some improvements, such as correctly handling sites that do not use BasedFlare. Big thanks to @loynet and @jawah for their work! I intend to maintain this fork up to date with the original package, as well as introduce further improvements where applicable.
 
+_Rename notice:_ This project was briefly knows as `basedflare-session-niquests`. Since release 0.3.0 it is fully renamed to `basedflare-session-redux`. The project under the previous name is now archived on PyPI and will not be updated.
+
 ## Usage
 
 Suppose `example.com` is a website that requires you to solve a challenge before you can access it. Below is a simple
